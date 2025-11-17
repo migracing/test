@@ -1,0 +1,18 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Logs
+*.log
+
+# Virtual environments
+venv/
+.env
+
+# Docker
+*.tar
+
+# GitHub Actions temporary files
+.github/workflows/__pycache__/
