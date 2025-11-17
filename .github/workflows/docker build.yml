@@ -53,5 +53,4 @@ jobs:
 
       # Step 6: Optional logging of pushed tags
       - name: Show pushed tags
-        run: |
-          echo "Docker image tags pushed: ${{ steps.meta.outputs.tags }}"
+        run: echo "Docker image tags pushed: ${{ steps.meta.outputs.tags }}"
