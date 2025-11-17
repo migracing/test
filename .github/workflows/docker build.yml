@@ -39,4 +39,4 @@ jobs:
           push: true
           tags: |
             ghcr.io/migracing/test:latest
-            ghcr.io/migracing/test:v0.1
+            ghcr.io/migracing/test:v0.2
