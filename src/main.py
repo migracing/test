@@ -21,5 +21,5 @@ logger.info("Hello World logged via logging module!")
 while True:
     logger.info("Still alive...")
     print("This is printing from a 'print' statement.")
-    print("This is added in verion 0.4.")
+    print("This is dev branch.")
     time.sleep(5)
