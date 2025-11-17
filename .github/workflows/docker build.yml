@@ -2,7 +2,8 @@ name: Build and Push Docker Image
 
 on:
   push:
-    branches: [ "main" ]       # Only auto-build when pushing to main
+    tags:
+      - 'v*'
   workflow_dispatch:           # Allow manual trigger from GitHub UI
 
 permissions:
@@ -30,13 +31,26 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GHCR_PAT }}   # Secret you create (see below)
 
-      # Step 4: Build and push Docker image
+      # Step 4: Extract metadata for tags and labels
+      - name: Extract Docker metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ghcr.io/migracing/test
+          tags: |
+            type=ref,event=tag          # Tag from Git, e.g., v0.4
+            type=raw,value=latest,enable=true  # Always add :latest
+
+      # Step 5: Build and push Docker image
       - name: Build and push Docker image
         uses: docker/build-push-action@v6
         with:
           context: .
           file: ./Dockerfile
           push: true
-          tags: |
-            ghcr.io/migracing/test:latest
-            ghcr.io/migracing/test:v0.2
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+
+      # Step 6: Optional logging of pushed tags
+      - name: Show pushed tags
+        run: echo "Docker image tags pushed: ${{ steps.meta.outputs.tags }}"
